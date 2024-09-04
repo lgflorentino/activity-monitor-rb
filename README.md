@@ -1,18 +1,28 @@
-# Activity::Monitor::Rb
+# Activity Monitor for Ruby
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/activity/monitor/rb`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is a [Hanami](https://hanamirb.org) [provider](https://guides.hanamirb.org/v2.2/app/providers/). It's function is to receive notifications from webhooks commonly used on version control systems (VCS).
 
-TODO: Delete this and the text above, and describe your gem
+There is no documentation given about setting up webhooks on any of the VCS platforms. Most VCS will have extensive doco for you to peruse.
+
+Features:
+
+* Create and maintain a user defined list of URL endpoints which will receive the JSON from the webhooks **(not implemented)**
+* Parse received JSON **(not implemented)**
+* Store parsed data in database **(not implemented)** 
+* 
+
+Anti-features:
+* No display or analysis of the data of any kind
 
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add activity-monitor-rb
+    $ bundle add activity-monitor
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install activity-monitor-rb
+    $ gem install activity-monitor
 
 ## Usage
 

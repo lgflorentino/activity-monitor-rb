@@ -3,22 +3,22 @@
 require_relative "lib/activity_monitor/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "activity-monitor-rb"
+  spec.name = "activity_monitor"
   spec.version = ActivityMonitor::VERSION
   spec.authors = ["lgflorentino"]
   spec.email = ["82384021+lgflorentino@users.noreply.github.com"]
 
   spec.summary = "Activity Monitor backend for Ruby"
-  spec.description = "This is a backend for monitoring webhooks sent from git SCM platforms such as Github, Gitlab, Codeberg etc."
-  spec.homepage = "https://github.com/lgflorentino/activity-monitor-rb"
+  spec.description = "This is a backend for monitoring webhooks sent from git VCS platforms such as Github, Gitlab, Codeberg etc."
+  spec.homepage = "https://github.com/lgflorentino/activity_monitor_rb"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/lgflorentino/activity-monitor-rb"
-  spec.metadata["changelog_uri"] = "https://github.com/lgflorentino/activity-monitor-rb/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/lgflorentino/activity_monitor_rb"
+  spec.metadata["changelog_uri"] = "https://github.com/lgflorentino/activity_monitor_rb/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

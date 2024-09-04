@@ -2,7 +2,7 @@
 
 RSpec.describe ActivityMonitor do
   it "has a version number" do
-    expect(ActivityMontior::VERSION).not_to be nil
+    expect(ActivityMonitor::VERSION).not_to be nil
   end
 
   it "does something useful" do

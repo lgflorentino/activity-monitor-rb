@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in activity-monitor-rb.gemspec
+# Specify your gem's dependencies in activity_monitor.gemspec
 gemspec
 
 gem "rake", "~> 13.0"
