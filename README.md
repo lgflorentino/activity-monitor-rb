@@ -12,7 +12,7 @@ Features:
 * 
 
 Anti-features:
-* No display or analysis of the data of any kind
+* No display or analysis of the data of any kind (see [hheatmap](https://github.com/lgflorentino/hheatmap) for reference front-end)
 
 ## Installation
 

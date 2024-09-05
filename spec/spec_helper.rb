@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "activity_monitor/am"
+require "activity_monitor"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

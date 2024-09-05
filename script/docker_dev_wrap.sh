@@ -35,6 +35,7 @@ docker run -it --rm \
     -e BUNDLE_PATH=$DOCKER_BUNDLE_PATH \
     -w $DOCKER_WORK_D \
     -v $DOCKER_APP_D:$DOCKER_WORK_D \
+    --mount source=activity_monitor_shared,target=$DOCKER_WORK_D \
     $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VER \
     /bin/sh -l -c "$DOCKER_CMD"
 
