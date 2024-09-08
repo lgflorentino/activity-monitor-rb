@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 
-
 PRJ_ROOT="$(cd $(dirname $0)/..; pwd)"
 
 DOCKER_IMAGE_NAME="activity_monitor_rb"
@@ -9,6 +8,7 @@ DOCKER_WORK_D="/app"
 DOCKER_APP_D="$(cd $(dirname $0)/..; pwd)"
 DOCKER_BUNDLE_PATH="${DOCKER_WORK_D}/.bundle"
 DOCKER_CMD=${*[@]:1}
+DOCKER_SHARED_VOLUME_NAME="activity_monitor_rb_shared"
 HOST_USER_ID="$(id -u)"
 HOST_GROUP_ID="$(id -g)"
 
@@ -25,6 +25,32 @@ if [[ $(docker image inspect $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VER > /dev/null; e
     echo "Finished building docker image."
 fi
 
+if [[ $(docker volume inspect $DOCKER_SHARED_VOLUME_NAME > /dev/null; echo $?) -gt 0 ]] then
+    
+    echo "Docker shared volume not found. Creating a volume..."
+    
+    docker volume create $DOCKER_SHARED_VOLUME_NAME
+
+    echo "Created an empty volume $DOCKER_SHARED_VOLUME_NAME"
+
+    docker run --rm -idt \
+        -v $DOCKER_SHARED_VOLUME_NAME:$DOCKER_WORK_D \
+        --name "${DOCKER_IMAGE_NAME}_tmpcont" \
+        $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VER \
+        tail -f /dev/null
+
+    echo "Created a temporary container ${DOCKER_IMAGE_NAME}_tmpcont"
+
+    docker cp . ${DOCKER_IMAGE_NAME}_tmpcont:/app
+    
+    echo "Copied project root into temporary container ${DOCKER_IMAGE_NAME}_tmpcont"
+
+    docker container stop ${DOCKER_IMAGE_NAME}_tmpcont
+    echo "Stopped temporary container ${DOCKER_IMAGE_NAME}_tmpcont"
+
+fi
+
+
 [[ -n $DEBUG ]] && echo "DOCKER_RUN_CMD = \' docker run -it --rm \
     -w $DOCKER_WORK_D \
     -v $DOCKER_APP_D:$DOCKER_WORK_D \
@@ -34,8 +60,7 @@ fi
 docker run -it --rm \
     -e BUNDLE_PATH=$DOCKER_BUNDLE_PATH \
     -w $DOCKER_WORK_D \
-    -v $DOCKER_APP_D:$DOCKER_WORK_D \
-    --mount source=activity_monitor_shared,target=$DOCKER_WORK_D \
+    --mount type=bind,source=${PRJ_ROOT},target=$DOCKER_WORK_D \
     $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VER \
     /bin/sh -l -c "$DOCKER_CMD"
 

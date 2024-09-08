@@ -1,10 +1,4 @@
-# frozen_string_literal: true
+#frozen_string_literal: true
 
-require_relative "version"
+require_relative "am/am.rb"
 
-module ActivityMonitor
-  module Info
-    class Error < StandardError; end
-    # Your code goes here...
-  end
-end

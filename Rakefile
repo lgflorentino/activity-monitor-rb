@@ -10,3 +10,7 @@ require "rubocop/rake_task"
 RuboCop::RakeTask.new
 
 task default: %i[spec rubocop]
+
+task :docker_tests do 
+  ruby "spec/docker/run_docker_tests.rb"
+end

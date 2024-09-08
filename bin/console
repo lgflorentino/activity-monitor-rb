@@ -13,3 +13,6 @@ require "activity_monitor"
 
 require "irb"
 IRB.start(__FILE__)
+
+
+exec("env")
