@@ -1,4 +1,5 @@
 # Activity Monitor for Ruby
+![Test Status](https://github.com/lgflorentino/activity_monitor_rb/actions/workflows/tests.yml/badge.svg)
 
 This is a [Hanami](https://hanamirb.org) [provider](https://guides.hanamirb.org/v2.2/app/providers/). It's function is to receive notifications from webhooks commonly used on version control systems (VCS).
 

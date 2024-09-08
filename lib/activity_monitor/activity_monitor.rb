@@ -7,7 +7,7 @@ module ActivityMonitor
     end
 
     def self.env(e: ENV)
-      return e
+      return e["RUBY_MAJOR"]
     end
   end
 end

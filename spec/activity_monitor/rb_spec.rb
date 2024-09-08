@@ -9,6 +9,6 @@ RSpec.describe ActivityMonitor do
 
   it "returns an instance" do
     am = ActivityMonitor::ActivityMonitor.env()
-    expect(am).to eq(0)
+    expect(am).to eq("3.1")
   end
 end
