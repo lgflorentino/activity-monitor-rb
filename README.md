@@ -8,16 +8,16 @@ Features:
 
 * Create and maintain a list of URL endpoints which will receive JSON from externally configured webhooks
     * Feature location: `lib/activity_monitor/router`
-    * Feature status:   - [ ]
+    - [ ] Feature implemented
 * Parse JSON that is received on the webhook endpoints
     * Feature location: `lib/activity_monitor/json_parser`
-    * Feature status:   - [ ]
+    - [ ] Feature implemented
 * Provide parsing for a webhook which posts all data or a subset of data
     * Feature location `lib/activity_monitor/json_parser/{all,subset}`
-    * Feature status: - [ ]
+    - [ ] Feature implemented
 * Store parsed data in db or other
     * Feature location: `lib/activity_monitor/persistance`
-    * Feature status: - [ ]
+    - [ ] Feature implemented
 * Provide URL endpoints for the following third party services
     - [ ] Github
     - [ ] Gitlab
