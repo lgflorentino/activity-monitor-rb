@@ -6,23 +6,38 @@ There is no documentation given about setting up webhooks on any of the VCS plat
 
 Features:
 
-* Create and maintain a user defined list of URL endpoints which will receive the JSON from the webhooks **(not implemented)**
-* Parse received JSON **(not implemented)**
-* Store parsed data in database **(not implemented)** 
-* 
+* Create and maintain a list of URL endpoints which will receive JSON from externally configured webhooks
+    * Feature location: `lib/activity_monitor/router`
+    * Feature status:   - [ ]
+* Parse JSON that is received on the webhook endpoints
+    * Feature location: `lib/activity_monitor/json_parser`
+    * Feature status:   - [ ]
+* Provide parsing for a webhook which posts all data or a subset of data
+    * Feature location `lib/activity_monitor/json_parser/{all,subset}`
+    * Feature status: - [ ]
+* Store parsed data in db or other
+    * Feature location: `lib/activity_monitor/persistance`
+    * Feature status: - [ ]
+* Provide URL endpoints for the following third party services
+    - [ ] Github
+    - [ ] Gitlab
+    - [ ] Bitbucket
+    - [ ] Codeberg
+    - [ ] Source Hut (No webhooks yet)
+    - [ ] Custom git deployment
 
 Anti-features:
-* No display or analysis of the data of any kind (see [hheatmap](https://github.com/lgflorentino/hheatmap) for reference front-end)
+* No display or analysis of the data of any kind (see [hheatmap](https://github.com/lgflorentino/hheatmap) for reference front-end) or write your own web app to grab the data from the db
 
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add activity-monitor
+    $ bundle add activity_monitor
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install activity-monitor
+    $ gem install activity_monitor
 
 ## Usage
 

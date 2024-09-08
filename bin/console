@@ -15,4 +15,3 @@ require "irb"
 IRB.start(__FILE__)
 
 
-exec("env")

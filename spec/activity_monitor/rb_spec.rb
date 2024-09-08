@@ -4,11 +4,11 @@ require "activity_monitor"
 
 RSpec.describe ActivityMonitor do
   it "has a version number" do
-    expect(ActivityMonitor::VERSION).not_to be nil
+    expect(ActivityMonitor::VERSION).to eq("0.1.0")
   end
 
-  it "returns an instance of the module" do
-    am = ActivityMonitor.initialize
+  it "returns an instance" do
+    am = ActivityMonitor::ActivityMonitor.env()
     expect(am).to eq(0)
   end
 end
