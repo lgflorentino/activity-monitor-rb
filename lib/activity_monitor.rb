@@ -3,6 +3,7 @@
 require "hanami" if Gem.loaded_specs.has_key? "hanami"
 require "zeitwerk"
 loader = Zeitwerk::Loader.for_gem
+loader.inflector.inflect("cli" => "CLI")
 loader.setup
 
 module ActivityMonitor
