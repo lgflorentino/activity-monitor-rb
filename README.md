@@ -33,12 +33,18 @@ Anti-features:
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
-
+```sh
     $ bundle add activity_monitor
-
+```
 If bundler is not being used to manage dependencies, install the gem by executing:
-
+```sh
     $ gem install activity_monitor
+```
+
+### Hanami Extended Installation 
+```sh
+$ bundle exec hanami activity-monitor install
+```
 
 ## Usage
 

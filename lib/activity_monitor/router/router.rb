@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ActivityMonitor
-  class ActivityMonitor
+  class Router
 
     def initialize()
       puts ENV.keys

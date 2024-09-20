@@ -9,6 +9,8 @@ DOCKER_APP_D="$(cd $(dirname $0)/..; pwd)"
 DOCKER_BUNDLE_PATH="${DOCKER_WORK_D}/.data/bundle"
 DOCKER_CMD=${*[@]:1}
 DOCKER_SHARED_VOLUME_NAME="activity_monitor_rb_shared"
+DOCKER_SERVER_HOST="0.0.0.0"
+DOCKER_SERVER_PORT="22229"
 HOST_USER_ID="$(id -u)"
 HOST_GROUP_ID="$(id -g)"
 
@@ -60,6 +62,7 @@ fi
 docker run -it --rm \
     -e BUNDLE_PATH=$DOCKER_BUNDLE_PATH \
     -w $DOCKER_WORK_D \
+    -p $DOCKER_SERVER_PORT:9292 \
     --mount type=bind,source=${PRJ_ROOT},target=$DOCKER_WORK_D \
     $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VER \
     /bin/sh -l -c "$DOCKER_CMD"
