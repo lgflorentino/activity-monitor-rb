@@ -7,8 +7,8 @@ RSpec.describe ActivityMonitor do
     expect(ActivityMonitor::VERSION).to eq("0.1.0")
   end
 
-  it "returns an instance" do
-    am = ActivityMonitor::ActivityMonitor.env()
-    expect(am).to eq("3.1")
+  it "can be setup" do
+    expect(ActivityMonitor::setup).to be_a_kind_of(ActivityMonitor::App)
   end
+
 end

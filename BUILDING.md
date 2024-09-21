@@ -6,16 +6,20 @@ Build Instructions
 There is a docker environment to help with keeping everything sandboxed.
 
 ```zsh
-./script/docker_dev_wrap.sh <cmd> <params> <go> <here>
+bin/docker <cmd> <params> <go> <here>
 # E.g.
-./script/docker_dev_wrap.sh bundle install
+./bin/docker bundle install
+./bin/docker bin/console #ruby interpreter
+
+# Running rackup to test the app in standalone mode. The server settings are required so that you can curl it from outside the docker sandbox
+bin/docker bundle exec rackup --server=puma --host=0.0.0.0 --port=22229
 ```
 
 
  Running the test suite
 
 ```zsh
-/script/docker_dev_wrap.sh bundle rspec
+bin/docker bundle exec rspec
 ```
 
 
