@@ -1,9 +1,10 @@
 # Activity Monitor for Ruby
 ![Test Status](https://github.com/lgflorentino/activity_monitor_rb/actions/workflows/tests.yml/badge.svg)
 
-This is a [Hanami](https://hanamirb.org) [provider](https://guides.hanamirb.org/v2.2/app/providers/). It's function is to receive notifications from webhooks commonly used on version control systems (VCS).
+This is a [Rack](https://github.com/rack/rack) Middleware app. It is heavily influenced by the [Hanami](https://hanamirb.org) web framework and [dry-rb](https://dry-rb.org/) libraries. 
+The app will accept [json](https://ecma-international.org/publications-and-standards/standards/ecma-404/) data posted to it from webhooks commonly used on version control systems (VCS).
 
-There is no documentation given about setting up webhooks on any of the VCS platforms. Most VCS will have extensive doco for you to peruse.
+There is no documentation given about setting up webhooks on any of the VCS platforms. Most VCS systems and vendors will have extensive doco for you to peruse on that topic.
 
 Features:
 

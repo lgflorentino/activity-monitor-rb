@@ -8,19 +8,16 @@ require "hanami/cli"
 
 module ActivityMonitor
   module Templates
-    module Hanami
-        class ProviderGenerator
+    class HanamiProvider
 
-          def initialize()
+      def initialize()
+        @template ||= PROVIDER
+      end
 
-            @file_path = "/config/providers/activity_monitor.rb"
-            
-          end
-        
-        BASE_PROVIDER = <<-PROVIDER_TEMPLATE
+      PROVIDER = <<-PROVIDER_TEMPLATE
 Hanami.app.register_provider(:activity_monitor, namespace: true) do |container|
   
-  #ActivityMonitor initialisation procedure goes here
+  # ActivityMonitor initialisation procedure goes here
   prepare do
     require 'activity_monitor'
     ActivityMonitor::setup
@@ -32,15 +29,14 @@ Hanami.app.register_provider(:activity_monitor, namespace: true) do |container|
     register 'app', app
   end
 
-  #ActivityMonitor exit procedure goes here
+  # ActivityMonitor exit procedure goes here
   stop do 
   end
 end      
         PROVIDER_TEMPLATE
         
-        attr_accessor :file_path
+        attr_accessor :template
 
-        end
     end
   end
 end

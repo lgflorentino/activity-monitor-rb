@@ -1,14 +1,24 @@
 # frozen_string_literal: true
 
+require "open3"
 require "activity_monitor"
 
-RSpec.describe ActivityMonitor do
-  it "has a version number" do
-    expect(ActivityMonitor::VERSION).to eq("0.1.0")
+
+
+RSpec.describe "exe/am" do
+
+  let(:root) do
+    Pathname(__dir__).join("../..").realpath
+  end
+  
+  def output
+    Open3.capture3("exe/am #{args.join(' ')}", chdir: root)
   end
 
-  it "can be setup" do
-    expect(ActivityMonitor::setup).to be_a_kind_of(ActivityMonitor::App)
+  context "no args" do
+    let(:args) { [] }
+    it "prints out usage" do
+      expect("#{output[1]}").to include("generate")
+    end
   end
-
 end

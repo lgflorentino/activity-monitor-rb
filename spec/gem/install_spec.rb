@@ -2,7 +2,7 @@
 
 require "activity_monitor"
 
-Rspec.describe ActivityMonitorGem do
+RSpec.describe ActivityMonitor do
  it "can be installed" do
    
  end
