@@ -3,9 +3,8 @@
 module ActivityMonitor
   VERSION = "0.1.0"
 
-
   def version_string
-    return VERSION
+    VERSION
   end
 
   module_function :version_string

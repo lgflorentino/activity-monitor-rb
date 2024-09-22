@@ -2,20 +2,19 @@
 
 module ActivityMonitor
   class HanamiApp
-
     include ActivityMonitor::Logging
 
-    def initialize(app, name = nil)
+    def initialize(app, _name = nil)
       @app = app
-      @am_config = ActivityMonitor::Config::new
+      @am_config = ActivityMonitor::Config.new
       log.info("Hanami App Initialized")
       # @hanami_config = ::Hanami::app::config
     end
 
     def call(env)
-      log.info "#{@app}"
-      if env['REQUEST_PATH'] == "/activity_monitor"
-        ['200', {'Content-Type' => 'text/html'}, ["Hello from activity monitor "]]
+      log.info @app.to_s
+      if env["REQUEST_PATH"] == "/activity_monitor"
+        [200, {"Content-Type" => "text/html"}, ["Hello from activity monitor "]]
       end
       _, _, _ = response = @app.call(env)
       response

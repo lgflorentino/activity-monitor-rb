@@ -8,7 +8,6 @@ RSpec.describe ActivityMonitor do
   end
 
   it "can be setup" do
-    expect(ActivityMonitor::setup).to be_a_kind_of(ActivityMonitor::App)
+    expect(ActivityMonitor.setup).to be_a_kind_of(ActivityMonitor::App)
   end
-
 end
