@@ -5,17 +5,16 @@ module ActivityMonitor
     include ActivityMonitor::Logging
 
     def initialize
-      @am_config = ActivityMonitor::Config.new
-      @router = ActivityMonitor::Router.select_router
-      @routes = ActivityMonitor::Router::Routes.new
+      @am_config = ActivityMonitor::Config.instance
+    
       log.info("Initialized")
       # @hanami_config = ::Hanami::app::config
     end
 
-    def call(env)
-      if env["REQUEST_PATH"] == "/activity_monitor"
-        [200, {"Content-Type" => "text/html"}, ["Hello from activity monitor"]]
-      end
+    def call(...)
+      log.debug "-> #{self}.call"
+      log.debug "<- #{self}.call"
+      @am_config.router.process_request(...)
     end
 
     def set_config(key, val)

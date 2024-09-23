@@ -4,10 +4,24 @@ require_relative("#{__dir__}/../../config/am.conf.rb")
 
 module ActivityMonitor
   class Config
-    attr_accessor :is_hanami_app, :root_slug, :router
+
+    attr_accessor :is_hanami_app, :root_slugs, :services, :trailing_slugs, :router, :routes
+    
+    @instance_mutex = Mutex.new
+    private_class_method :new
 
     def initialize
       reset_config
+    end
+
+    def self.instance
+      return @instance if @instance
+
+      @instance_mutex.synchronize do
+        @instance ||= new
+      end
+      
+      @instance
     end
 
     def dump
@@ -22,8 +36,12 @@ module ActivityMonitor
 
     def reset_config
       @is_hanami_app = false
-      @root_slug = AM_CONF[:root_slug]
-      @router = ActivityMonitor::Router.select_router
+      @root_slugs = AM_CONF[:root_slugs]
+      @services = AM_CONF[:enabled_services]
+      @trailing_slugs = AM_CONF[:trailing_slugs]
+      @routes = ActivityMonitor::Routing::Routes.new(@root_slugs, @services, @trailing_slugs)
+      @router = ActivityMonitor::Routing::DefaultRouter.new(@routes)
+
     end
   end
 end
