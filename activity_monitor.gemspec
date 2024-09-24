@@ -32,16 +32,18 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "bundler", "~> 2.1"
-  spec.add_dependency "dry-cli", "~> 1.0", ">=1.1.0"
-  spec.add_dependency "hanami", "~> 2.1.0"
-  spec.add_dependency "hanami-router", "~> 2.1.0"
   spec.add_dependency "zeitwerk", "~>2.6.13"
   spec.add_dependency "rack", "~> 2.0"
+  spec.add_dependency "rom", "~> 5.0"
+  spec.add_dependency "rom-sql", "~> 3.0"
+  spec.add_dependency "rackup", "~> 1.0"
+  spec.add_dependency "dry-cli", "~> 1.1"
 
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rubocop", "~> 1.21"
   spec.add_development_dependency "rubocop-on-rbs", "~> 1.0.0"
   spec.add_development_dependency "puma", "~> 6.0"
+  spec.add_development_dependency "rake", "~> 13.0"
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
 end

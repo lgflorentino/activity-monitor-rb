@@ -25,7 +25,10 @@ module ActivityMonitor
       },
       trailing_slugs: %w[
         new
-      ]
+      ],
+      db_url: unless ENV.key?("DATABASE_URL") then
+                "sqlite://#{__dir__}/../.data/am.db" else
+                ENV["DATABASE_URL"] end
     }.freeze
   end
 end

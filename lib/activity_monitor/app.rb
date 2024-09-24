@@ -12,8 +12,6 @@ module ActivityMonitor
     end
 
     def call(...)
-      log.debug "-> #{self}.call"
-      log.debug "<- #{self}.call"
       @am_config.router.process_request(...)
     end
 

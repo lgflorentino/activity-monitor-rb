@@ -3,6 +3,11 @@
 require "zeitwerk"
 loader = Zeitwerk::Loader.for_gem
 loader.inflector.inflect("cli" => "CLI")
+loader.inflector.inflect("db" => "DB")
+loader.inflector.inflect("sqlite" => "SQLite")
+loader.inflector.inflect("postgresql" => "PostgreSQL")
+loader.inflector.inflect("am_events" => "AMEvents")
+loader.inflector.inflect("am_repo" => "AMRepo")
 loader.setup
 
 module ActivityMonitor

@@ -36,6 +36,9 @@ module ActivityMonitor
         return [404, {"Content-Type" => "text/html"}, ["Not Found"]] unless matched
       end
 
+      # Selects the object and method to call based on the endpoint 
+      #
+      # @param service - the service name as specified in config/am.conf.rb
       def invoke_callback(service)
 
         return [200, {"Content-Type" => "text/html"}, ["Name: #{service}"]]

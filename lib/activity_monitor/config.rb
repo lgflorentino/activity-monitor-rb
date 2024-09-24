@@ -5,7 +5,7 @@ require_relative("#{__dir__}/../../config/am.conf.rb")
 module ActivityMonitor
   class Config
 
-    attr_accessor :is_hanami_app, :root_slugs, :services, :trailing_slugs, :router, :routes
+    attr_accessor :is_hanami_app, :root_slugs, :services, :trailing_slugs, :router, :routes, :db
     
     @instance_mutex = Mutex.new
     private_class_method :new
@@ -39,6 +39,7 @@ module ActivityMonitor
       @root_slugs = AM_CONF[:root_slugs]
       @services = AM_CONF[:enabled_services]
       @trailing_slugs = AM_CONF[:trailing_slugs]
+      @db = ActivityMonitor::DB::Connection.new(db_conn_str: AM_CONF[:db_url])
       @routes = ActivityMonitor::Routing::Routes.new(@root_slugs, @services, @trailing_slugs)
       @router = ActivityMonitor::Routing::DefaultRouter.new(@routes)
 

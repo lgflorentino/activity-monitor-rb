@@ -36,20 +36,28 @@ Anti-features:
 Install the gem and add to the application's Gemfile by executing:
 ```sh
     $ bundle add activity_monitor
+    
 ```
 If bundler is not being used to manage dependencies, install the gem by executing:
 ```sh
     $ gem install activity_monitor
 ```
 
-### Hanami Extended Installation 
+### Hanami Extended Installation  **WIP
 ```sh
 $ bundle exec hanami activity-monitor install
 ```
 
-## Usage
+## CLI Usage
 
-TODO: Write usage instructions here
+The app comes a Command Line Interface (CLI) tool to help with some tasks. The documentation for the tool is provided by the tool when used in conjunction with the `--help` option.
+Ex:
+```sh
+  bundle exec am --help
+  
+  # bundle exec am COMMAND --help
+  bundle exec am run --help
+```
 
 ## Development
 
