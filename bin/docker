@@ -61,7 +61,8 @@ fi
 
 docker run -it --rm \
     -e DATABASE_URL=${DATABASE_URL} \
-    -e BUNDLE_PATH=$DOCKER_BUNDLE_PATH \
+    -e BUNDLE_PATH=${DOCKER_BUNDLE_PATH} \
+    -e AM_ENV=${AM_ENV} \
     -w $DOCKER_WORK_D \
     -p $DOCKER_SERVER_PORT:9292 \
     --mount type=bind,source=${PRJ_ROOT},target=$DOCKER_WORK_D \

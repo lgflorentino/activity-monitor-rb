@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "open3"
-require "activity_monitor"
 
 RSpec.describe "exe/am" do
   let(:root) do

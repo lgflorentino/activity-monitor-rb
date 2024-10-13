@@ -2,7 +2,6 @@
 
 module ActivityMonitor
   module Router
-
     def select_router
       ActivityMonitor::Routing::DefaultRouter.new
     end

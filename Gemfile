@@ -13,3 +13,4 @@ group :db_pgsql_backend do
   gem "pg", "~> 1.5"
   gem "sequel_pg", "~> 1.17"
 end
+

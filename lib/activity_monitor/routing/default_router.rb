@@ -6,42 +6,53 @@ module ActivityMonitor
   module Routing
     class DefaultRouter
       include ActivityMonitor::Logging
-      
-      def initialize(routes)
-        @routes = routes.routes
 
-        puts "Router intialized of type: Default"
+      def initialize(routes: nil, db_conn: nil, services: nil)
+        @routes = routes
+        @services = services
+        @db_conn = db_conn
       end
 
-      def process_request(*args, **kws, &blk)
-        log.debug "process_request: args => #{JSON.pretty_generate(args)}, kws => #{kws}"
-        
-        log.debug "@routes: #{@routes}"
-        matched = false
+      attr_accessor :routes, :db_conn, :services
+
+      def match_request(*args, **kws)
         path_info = args[0]["PATH_INFO"].to_s
+        resp = [404, {"Content-Type" => "text/html"}, ["Not Found"]]
 
         # match the route path then match the service slug based on a Regexp
         # dispatch the call to the service callback
         @routes.each do |route|
           log.debug "Matching #{route} with #{path_info}"
           if route[2] === path_info
-            slug_re = /^*\/#{route[1]}\/*/
+            slug_re = %r{^*/#{route[1]}/*}
             if slug_re.match?(path_info)
-              matched = true
-              return invoke_callback(route[0])
-            end 
+              resp = process_request(route[0], env: args[0])
+              break
+            end
           end
         end
 
-        return [404, {"Content-Type" => "text/html"}, ["Not Found"]] unless matched
+        return resp
       end
 
-      # Selects the object and method to call based on the endpoint 
+      # Selects the object and method to call based on the endpoint
       #
-      # @param service - the service name as specified in config/am.conf.rb
-      def invoke_callback(service)
-
-        return [200, {"Content-Type" => "text/html"}, ["Name: #{service}"]]
+      # @param service - the service name as specified in config/base_config.rb
+      def process_request(service, env: nil)
+        json = JSON.parse env['rack.input'].read
+          
+        case service
+        when :bitbucket
+          @bb.process_event(json)
+        when :codeberg
+          @cb.process(json)
+        when :github
+          @gh.process(json)
+        when :gitlab
+          @gl.process(json)
+        end
+        resp = [200, {"Content-Type" => "text/html"}, ["Webhook delivered!"]]
+        return resp
       end
     end
   end

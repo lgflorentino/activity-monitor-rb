@@ -1,26 +1,34 @@
 # frozen_string_literal: true
 
+require "activity_monitor/support/gem_inflector"
 require "zeitwerk"
-loader = Zeitwerk::Loader.for_gem
-loader.inflector.inflect("cli" => "CLI")
-loader.inflector.inflect("db" => "DB")
-loader.inflector.inflect("sqlite" => "SQLite")
-loader.inflector.inflect("postgresql" => "PostgreSQL")
-loader.inflector.inflect("am_events" => "AMEvents")
-loader.inflector.inflect("am_repo" => "AMRepo")
+
+loader = Zeitwerk::Loader.for_gem.tap do |l|
+  l.inflector = ActivityMonitor::Support::GemInflector.new(__FILE__)
+end
 loader.setup
 
 module ActivityMonitor
-  def self.setup
+
+  def self.setup(*args)
+
     unless instance_variable_defined?(:@am)
-      @am = ActivityMonitor::App.new
+      @am ||= ActivityMonitor::App.new
     end
 
-    @am.log.debug "Setup finished"
     @am
   end
 
   def self.run
     setup
   end
+
+  def self.am
+    unless instance_variable_defined?(:@am)
+      setup
+    end
+
+    @am
+  end
+
 end

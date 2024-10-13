@@ -34,8 +34,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "bundler", "~> 2.1"
   spec.add_dependency "zeitwerk", "~>2.6.13"
   spec.add_dependency "rack", "~> 2.0"
-  spec.add_dependency "rom", "~> 5.0"
-  spec.add_dependency "rom-sql", "~> 3.0"
+  spec.add_dependency "rom", "~> 5.3.2"
+  spec.add_dependency "rom-sql", "~> 3.6.4"
   spec.add_dependency "rackup", "~> 1.0"
   spec.add_dependency "dry-cli", "~> 1.1"
 

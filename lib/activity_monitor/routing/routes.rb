@@ -2,49 +2,43 @@
 
 module ActivityMonitor
   module Routing
-    class Routes
-      include ActivityMonitor::Logging
+    module Routes
 
-      attr_accessor :routes
-
-      # @param rs - root_slug ex: /am
-      # @param svcs - services ex: /bitbucket
-      # @param ts - trailing_slug ex: /webhooks/new
-      def initialize(rs, svcs, ts)
-        @rs = rs
-        @svcs = svcs
-        @ts = ts
-        @routes = []
-        
-        construct_routes
-      end
 
       # Constructs an array of routes the app will respond to based on the
-      # settings in $PROJECT_ROOT/config/am.conf.rb
+      # settings in config/base_config.rb
       #
-      def construct_routes
+      def as_array(rs, svcs, ts)
+        routes = []
         prefix = ""
         suffix = ""
 
-        @rs.each do |rs|
+        rs.each do |rs|
           s = rs.dup
-          s.gsub!(/^\/|$?\//, '')
+          s.gsub!(%r{^/|$?/}, "")
           prefix += "/" + s
         end
 
-        @ts.each do |ts|
+        ts.each do |ts|
           s = ts.dup
-          s.gsub!(/^\/|$?\//, '')
+          s.gsub!(%r{^/|$?/}, "")
           suffix += "/" + s
         end
-        
-        @svcs.each do |svc|
-          path = prefix + "/" + svc[1][:slug] + suffix 
 
-          @routes << [svc[0], svc[1][:slug], path]
+        svcs.each do |svc|
+          path = prefix + "/" + svc[1][:slug] + suffix
+
+          routes << [svc[0], svc[1][:slug], path]
         end
+
+        routes
       end
 
+      def to_s
+        "Need to implement this"
+      end
+
+      module_function :as_array
     end
   end
 end

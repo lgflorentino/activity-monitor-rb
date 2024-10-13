@@ -1,48 +1,28 @@
 # frozen_string_literal: true
 
-require_relative("#{__dir__}/../../config/am.conf.rb")
-
 module ActivityMonitor
-  class Config
-
-    attr_accessor :is_hanami_app, :root_slugs, :services, :trailing_slugs, :router, :routes, :db
-    
-    @instance_mutex = Mutex.new
-    private_class_method :new
-
-    def initialize
-      reset_config
-    end
-
-    def self.instance
-      return @instance if @instance
-
-      @instance_mutex.synchronize do
-        @instance ||= new
-      end
+  module Config
+    require_relative "config/merged.rb"
       
-      @instance
+    def self.merge!(&blk)
+      blk&.call(@am_config)
     end
 
-    def dump
-      ivars = instance_variables
-
-      ivars.each do |v|
-        p v.to_s.ljust(20) + "=> #{instance_variable_get(v)}"
+    def self.new(renv: ENV, path: nil)
+      if instance_variable_defined?(:@am_config)
+        @am_config = nil
       end
-    end
+      @am_config = ActivityMonitor::Config::Merged.new
+      @am_config.merge_cfg_from_env(renv: renv)
 
-    private
-
-    def reset_config
-      @is_hanami_app = false
-      @root_slugs = AM_CONF[:root_slugs]
-      @services = AM_CONF[:enabled_services]
-      @trailing_slugs = AM_CONF[:trailing_slugs]
-      @db = ActivityMonitor::DB::Connection.new(db_conn_str: AM_CONF[:db_url])
-      @routes = ActivityMonitor::Routing::Routes.new(@root_slugs, @services, @trailing_slugs)
-      @router = ActivityMonitor::Routing::DefaultRouter.new(@routes)
-
+      if path.nil? || path.empty?
+        require @am_config.config[:user_config_file]
+      else
+        @am_config.user_config_file= path
+        require @am_config.config[:user_config_file]
+      end
+      @am_config.finalise
+      @am_config
     end
   end
 end

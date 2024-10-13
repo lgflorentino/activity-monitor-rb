@@ -9,7 +9,6 @@ module ActivityMonitor
   module CLI
     module Commands
       extend Dry::CLI::Registry
-      
 
       class Version < Dry::CLI::Command
         desc "Prints the version of Activity Monitor"
@@ -18,7 +17,7 @@ module ActivityMonitor
           puts ActivityMonitor.version_string
         end
       end
-    
+
       # Generators for creating files on disk
       module Generate
         class HanamiProvider < Dry::CLI::Command
@@ -45,72 +44,25 @@ module ActivityMonitor
               raise FileExistsError.new(file_path)
             end
 
-            puts t.template #TODO make this a file 
-          end
-        end
-      end
-
-      module DB
-        class Migrate < Dry::CLI::Command
-          desc "Run migrations necessary to get the app to work from a new install"
-
-          def initialize
-            super
-          end
-
-          def call(*)
-            puts "write the command"
-          end
-        end
-
-        class Drop < Dry::CLI::Command
-          desc "Drop the database and all associated data. "
-
-          def intialize 
-            super
-          end
-
-          def call(*)
-            puts "Do you really want to drop the database ? (y/n)"
-            confirm = STDIN.gets.chomp
-            if confirm == "y"
-              drop_db
-            else
-              exit
-            end
-
-          end
-
-          def drop_db
-            
-          end
-        end
-
-        class Prepare < Dry::CLI::Command
-          desc "Prepare the database for use with Activity Monitor"
-
-          def initialize 
-             super
-          end
-
-          def call(*)
-            puts "write the command"
+            puts t.template # TODO: make this a file
           end
         end
       end
 
       module Run
         class Run < Dry::CLI::Command
-          desc "\n\n  Do not use 'am run' if using AM as a middleware or plugin. 
-  Runs the app in standalone mode as a Rack app with `rackup` without any 
-  middleware integrations for other frameworks. 
-  The internal implementations used in standalone mode are 
+          desc "\n\n  Do not use 'am run' if using AM as a middleware or plugin.
+  Runs the app in standalone mode as a Rack app with `rackup` without any
+  middleware integrations for other frameworks.
+  The internal implementations used in standalone mode are
   replaced by components provided by the framework when run as a middleware.\n"
-          
-          option :host, aliases: ["--host"], default: "localhost", desc: "host for the rackup server to listen on"
-          option :port, aliases: ["--port"], default: 9292, desc: "port for the rackup server to listen on"
 
-          def initialize 
+          option :host, aliases: ["--host"], default: "localhost",
+                        desc: "host for the rackup server to listen on"
+          option :port, aliases: ["--port"], default: 9292,
+                        desc: "port for the rackup server to listen on"
+
+          def initialize
             super
           end
 
@@ -125,10 +77,16 @@ module ActivityMonitor
         prefix.register "hanami-provider", Generate::HanamiProvider
       end
       register "db", aliases: ["database"] do |prefix|
-        prefix.register "migrate", DB::Migrate
-        prefix.register "drop", DB::Drop
-        prefix.register "prepare", DB::Prepare
+        prefix.register "migrate",  ActivityMonitor::DB::CLICommands::Migrate
+        prefix.register "drop",     ActivityMonitor::DB::CLICommands::Drop
+        prefix.register "prepare",  ActivityMonitor::DB::CLICommands::Prepare
+        prefix.register "query",    ActivityMonitor::DB::CLICommands::Query
       end
+
+      register "routes", aliases: ["route"] do |prefix|
+        prefix.register "dump", ActivityMonitor::Routing::CLICommands::Dump
+      end
+
       register "run", Run::Run, aliases: ["r", "-r", "--run"]
     end
   end

@@ -5,10 +5,9 @@ require "rom-sql"
 
 module ActivityMonitor
   module DB
-    class AMEvents < ROM::Relation[:sql]
-    
-      schema(infer: true)
-      def initialize
+    module Relations
+      class GHEvents < ROM::Relation[:sql]
+        schema(:gh_events, infer: true)
       end
     end
   end

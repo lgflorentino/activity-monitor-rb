@@ -5,15 +5,16 @@ module ActivityMonitor
     class Service
       include ActivityMonitor::Logging
 
-      NAME = "DefaultService"
+     SERVICE_NAME = "super"
 
-      def initialize
+      def initialize()
       end
 
-      def call(*args, **kws, &blk)
-      end
+      def call(*args, **kws, &blk); end
 
-      def commit
+      def commit; end
+
+      def process(subclass, content)
       end
 
     end

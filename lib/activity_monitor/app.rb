@@ -2,29 +2,49 @@
 
 module ActivityMonitor
   class App
-    include ActivityMonitor::Logging
+    include Logging
 
     def initialize
-      @am_config = ActivityMonitor::Config.instance
-    
+      # App instance vars
+      @router = nil
+      @am_config = init_config
+      @db_cfg = init_db
+      @services = init_services(db: @db_cfg, cfg: @am_config)
+      @router = init_router(@services)
+      @router = Routing::DefaultRouter.new
+      @router.routes = Routing::Routes.as_array(
+        @am_config.config[:root_slugs],
+        @am_config.config[:enabled_services],
+        @am_config.config[:trailing_slugs])
+      @rom = DB.prepare
       log.info("Initialized")
-      # @hanami_config = ::Hanami::app::config
     end
 
     def call(...)
-      @am_config.router.process_request(...)
+      @router.match_request(...)
     end
 
-    def set_config(key, val)
-      @am_config.public_send(key, val)
+    def init_config
+      ActivityMonitor::Config.new.config
+    end
+
+    def init_db()
+      DB.prepare
+    end
+
+    def init_services(db: nil, cfg: nil)
+      s = cfg[:enabled_services]
+      log.debug s.to_s
     end
 
     def dump_config
-      @am_config.dump
+      @am_config.dump_to_console
+    end
+  
+    def routes
+      @router.routes
     end
 
-    def say_hello
-      puts "Hello from #{self}"
-    end
+    attr_accessor :am_config, :db
   end
 end
