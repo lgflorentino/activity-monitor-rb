@@ -1,19 +1,28 @@
-#frozen_string_literal: true
+# frozen_string_literal: true
 
 module ActivityMonitor
-  class Config
-    attr_accessor :is_hanami_app, :root_slug
-    
-    def initialize
-      self.reset_config
-      @root_slug = "/activity_monitor"
+  module Config
+    require_relative "config/merged.rb"
+      
+    def self.merge!(&blk)
+      blk&.call(@am_config)
     end
-    
-    def reset_config
-      @is_hanami_app = false
-      @root_slug = "/activity_monitor"
+
+    def self.new(renv: ENV, path: nil)
+      if instance_variable_defined?(:@am_config)
+        @am_config = nil
+      end
+      @am_config = ActivityMonitor::Config::Merged.new
+      @am_config.merge_cfg_from_env(renv: renv)
+
+      if path.nil? || path.empty?
+        require @am_config.config[:user_config_file]
+      else
+        @am_config.user_config_file= path
+        require @am_config.config[:user_config_file]
+      end
+      @am_config.finalise
+      @am_config
     end
-    
   end
 end
-

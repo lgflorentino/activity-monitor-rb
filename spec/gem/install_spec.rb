@@ -3,10 +3,6 @@
 require "activity_monitor"
 
 RSpec.describe ActivityMonitor do
- it "can be installed" do
-   
- end
+  it "can be installed" do
+  end
 end
-
-
-

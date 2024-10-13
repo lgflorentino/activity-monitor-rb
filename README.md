@@ -14,9 +14,12 @@ Features:
 * Parse JSON that is received on the webhook endpoints
     * Feature location: `lib/activity_monitor/json_parser`
     - [ ] Feature implemented
-* Provide parsing for a webhook which posts all data or a subset of data
+* Provide parsing for webhook events
     * Feature location `lib/activity_monitor/json_parser/{all,subset}`
-    - [ ] Feature implemented
+    - [ ] Push event implemented
+    - [ ] Pull Request event implemented
+    - [ ] Issue Created event implemented
+    - [ ] Comment event implemented
 * Store parsed data in db or other
     * Feature location: `lib/activity_monitor/persistance`
     - [ ] Feature implemented
@@ -36,20 +39,35 @@ Anti-features:
 Install the gem and add to the application's Gemfile by executing:
 ```sh
     $ bundle add activity_monitor
+    
 ```
 If bundler is not being used to manage dependencies, install the gem by executing:
 ```sh
     $ gem install activity_monitor
 ```
 
-### Hanami Extended Installation 
+### Hanami Extended Installation  **WIP
 ```sh
 $ bundle exec hanami activity-monitor install
 ```
 
-## Usage
+## CLI Usage
 
-TODO: Write usage instructions here
+The app comes a Command Line Interface (CLI) tool to help with some tasks. The documentation for the tool is provided by the tool when used in conjunction with the `--help` option.
+Ex:
+```sh
+  # List available rake tasks
+  bundle exec rake --tasks
+
+  # Bundled activity monitor tool
+  bundle exec am --help
+  
+  # bundle exec am COMMAND --help
+  bundle exec am run --help
+  
+  # connect to the db to run some command 
+  DATABASE_URL="sqlite://./.data/am.db" bundle exec rake db:clean
+```
 
 ## Development
 

@@ -4,4 +4,3 @@
 require_relative "../lib/activity_monitor/cli/commands"
 
 ActivityMonitor::CLI::Commands
-

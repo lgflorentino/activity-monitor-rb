@@ -1,26 +1,46 @@
 # frozen_string_literal: true
 
-
 module ActivityMonitor
   module Errors
     class ActivityMonitorError < StandardError
-      
-      def initialize()
-        super("ActivityMonitor encountered an unknown error!")
+      def initialize(arg)
+        super("ActivityMonitor Error: " + arg)
       end
     end
-    
+
     class FileDoesNotExistError < ActivityMonitorError
-      
       def initialize(arg: nil)
         super("The file '#{arg}' does not exist !")
       end
     end
 
     class FileExistsError < ActivityMonitorError
-      
-      def initialize(arg: nil, dir: nil)
+      def initialize(arg: nil)
         super("The file '#{arg}' already exists!")
+      end
+    end
+
+    class ConfigurationSettingError < ActivityMonitorError
+      def initialize(cfg_name:, cfg_val:)
+        super("The configuration setting: #{cfg_name}, does not accept value: #{cfg_val}.")
+      end
+    end
+    
+    class DBConnectionStringError < ActivityMonitorError
+      def initialize(*args)
+        super("The connection string was malformed: #{args}")
+      end
+    end
+    
+    class TypeError < ActivityMonitorError
+      def initialize(arg)
+        super(arg)
+      end
+    end
+
+    class ArgumentLengthError < ActivityMonitorError
+      def initialize(arg)
+        super(arg)
       end
     end
 

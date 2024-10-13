@@ -1,30 +1,34 @@
-#frozen_string_literal: true
+# frozen_string_literal: true
 
-require "hanami" if Gem.loaded_specs.has_key? "hanami"
+require "activity_monitor/support/gem_inflector"
 require "zeitwerk"
-loader = Zeitwerk::Loader.for_gem
-loader.inflector.inflect("cli" => "CLI")
+
+loader = Zeitwerk::Loader.for_gem.tap do |l|
+  l.inflector = ActivityMonitor::Support::GemInflector.new(__FILE__)
+end
 loader.setup
 
 module ActivityMonitor
 
-  def self.setup
+  def self.setup(*args)
 
     unless instance_variable_defined?(:@am)
-      @am = ActivityMonitor::App::new
+      @am ||= ActivityMonitor::App.new
     end
 
-    if (defined? Hanami) && Hanami::app?
-      @am.set_config "is_hanami_app=", true
-    end
-
-    @am.log.debug "Setup finished"
     @am
   end
 
   def self.run
-    self.setup
+    setup
+  end
+
+  def self.am
+    unless instance_variable_defined?(:@am)
+      setup
+    end
+
+    @am
   end
 
 end
-
