@@ -43,6 +43,19 @@ module ActivityMonitor
         super(arg)
       end
     end
+    
+    class ServiceError < ActivityMonitorError
+      def initialize(arg)
+        super("The problem with the Service was: #{arg}")
+      end
+    end
+    
+    class RepoError < ActivityMonitorError
+      def initialize(arg)
+        super("The problem with the Repo was: #{arg}")
+      end
+    end
+
 
   end
 end

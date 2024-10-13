@@ -7,10 +7,9 @@ module ActivityMonitor
     class DefaultRouter
       include ActivityMonitor::Logging
 
-      def initialize(routes: nil, db_conn: nil, services: nil)
+      def initialize(routes: nil, services: nil)
         @routes = routes
         @services = services
-        @db_conn = db_conn
       end
 
       attr_accessor :routes, :db_conn, :services
@@ -40,17 +39,7 @@ module ActivityMonitor
       # @param service - the service name as specified in config/base_config.rb
       def process_request(service, env: nil)
         json = JSON.parse env['rack.input'].read
-          
-        case service
-        when :bitbucket
-          @bb.process_event(json)
-        when :codeberg
-          @cb.process(json)
-        when :github
-          @gh.process(json)
-        when :gitlab
-          @gl.process(json)
-        end
+          @services[service].process_event(json)
         resp = [200, {"Content-Type" => "text/html"}, ["Webhook delivered!"]]
         return resp
       end

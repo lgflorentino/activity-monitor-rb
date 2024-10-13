@@ -31,10 +31,6 @@ module ActivityMonitor
             slug: "gl",
             secret: nil
           },
-          sourcehut: {
-            slug: "sh",
-            secret: nil
-          }
         },
         trailing_slugs: %w[
           new

@@ -6,17 +6,10 @@ module ActivityMonitor
 
     def initialize
       # App instance vars
-      @router = nil
       @am_config = init_config
-      @db_cfg = init_db
-      @services = init_services(db: @db_cfg, cfg: @am_config)
-      @router = init_router(@services)
-      @router = Routing::DefaultRouter.new
-      @router.routes = Routing::Routes.as_array(
-        @am_config.config[:root_slugs],
-        @am_config.config[:enabled_services],
-        @am_config.config[:trailing_slugs])
-      @rom = DB.prepare
+      @db = init_db(cfg: @am_config[:db_url])
+      @services = init_services(db: @db, cfg: @am_config)
+      @router = init_router
       log.info("Initialized")
     end
 
@@ -24,17 +17,30 @@ module ActivityMonitor
       @router.match_request(...)
     end
 
+    # init_config
     def init_config
       ActivityMonitor::Config.new.config
     end
 
-    def init_db()
-      DB.prepare
+    def init_db(cfg: nil)
+      DB.prepare(cfg: cfg)
     end
 
     def init_services(db: nil, cfg: nil)
-      s = cfg[:enabled_services]
-      log.debug s.to_s
+      svcs = {}
+      cfg[:enabled_services].each do |s|
+        svcs[s[0]] = ActivityMonitor::Services.get_service(s[0])
+        svcs[s[0]].db_setup(db: db)
+      end
+      svcs
+    end
+
+    def init_router
+      routes = Routing::Routes.as_array(
+        @am_config[:root_slugs],
+        @am_config[:enabled_services],
+        @am_config[:trailing_slugs])
+      Routing::DefaultRouter.new(services: @services, routes: routes)
     end
 
     def dump_config

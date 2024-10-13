@@ -3,11 +3,10 @@
 module ActivityMonitor
   module Services
     class Github < ActivityMonitor::Services::Service
-      NAME = "Github"
-
       def initialize
-        super
+        @service_name = "github"
       end
+
     end
   end
 end
