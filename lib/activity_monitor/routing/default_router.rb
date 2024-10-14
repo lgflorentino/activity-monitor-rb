@@ -26,6 +26,7 @@ module ActivityMonitor
             slug_re = %r{^*/#{route[1]}/*}
             if slug_re.match?(path_info)
               resp = process_request(route[0], env: args[0])
+              log.debug "Matched request: #{route[0]} with #{path_info}"
               break
             end
           end

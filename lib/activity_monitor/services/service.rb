@@ -5,15 +5,14 @@ module ActivityMonitor
     class Service
       include ActivityMonitor::Logging
 
-     SERVICE_NAME = "super"
-
       def initialize()
+        @service_name = "default"
       end
 
       def call(*args, **kws, &blk); end
 
       def db_setup(db: nil)
-        @repo = DB::Repos::BBRepo.new(db)
+        @repo = DB::Repos.init_repo(service_name: @service_name, db: db)
       end
 
       def process_event(content)

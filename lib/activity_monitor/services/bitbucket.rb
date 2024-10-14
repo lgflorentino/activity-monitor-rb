@@ -3,10 +3,9 @@
 module ActivityMonitor
   module Services
     class Bitbucket < ActivityMonitor::Services::Service
-      NAME = Bitbucket
 
       def initialize
-        super
+        @service_name = "bitbucket"
       end
     end
   end

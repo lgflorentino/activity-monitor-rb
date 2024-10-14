@@ -8,6 +8,8 @@ module ActivityMonitor
     
       # Service repo for the Github service.
       class GHRepo < ROM::Repository[:gh_events]
+        
+        commands :create
       
       end
     end
