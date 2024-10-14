@@ -8,7 +8,9 @@ module ActivityMonitor
     
       # Service repo for the Codeberg service.
       class CBRepo < ROM::Repository[:cb_events]
-      
+
+        commands :create
+           
       end
     end
   end

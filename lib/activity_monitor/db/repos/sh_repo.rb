@@ -7,6 +7,7 @@ module ActivityMonitor
     module Repos   
       # Service repo for the Source Hut service.
       class SHRepo < ROM::Repository[:sh_events]
+        commands :create
       end
     end
   end

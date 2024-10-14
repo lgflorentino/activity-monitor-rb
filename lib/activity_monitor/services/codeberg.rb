@@ -3,10 +3,9 @@
 module ActivityMonitor
   module Services
     class Codeberg < ActivityMonitor::Services::Service
-      NAME = "Codeberg"
 
       def initialize
-        super
+        @service_name = "codeberg"
       end
     end
   end

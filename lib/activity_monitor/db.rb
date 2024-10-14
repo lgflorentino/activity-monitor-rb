@@ -5,10 +5,9 @@ require "rom"
 module ActivityMonitor
   module DB
 
-    def prepare()
-      am_config = ActivityMonitor::Config.new
-      
-      rom_cfg = ROM::Configuration.new(:sql, am_config.config[:db_url])
+    def prepare(cfg: nil)
+
+      rom_cfg = ROM::Configuration.new(:sql, cfg)
 
       rom_cfg.register_relation(ActivityMonitor::DB::Relations::BBEvents)
       rom_cfg.register_relation(ActivityMonitor::DB::Relations::CBEvents)
