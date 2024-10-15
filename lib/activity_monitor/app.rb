@@ -7,7 +7,7 @@ module ActivityMonitor
     def initialize
       # App instance vars
       @am_config = init_config
-      @db = init_db(cfg: @am_config[:db_url])
+      @db = init_db(cfg: @am_config[:db_connections])
       @services = init_services(db: @db, cfg: @am_config)
       @router = init_router
       log.info("Initialized")
@@ -23,7 +23,7 @@ module ActivityMonitor
     end
 
     def init_db(cfg: nil)
-      DB.prepare(cfg: cfg)
+      DB.prepare(db_cfgs: cfg)
     end
 
     def init_services(db: nil, cfg: nil)

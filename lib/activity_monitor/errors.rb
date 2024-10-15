@@ -26,7 +26,7 @@ module ActivityMonitor
       end
     end
     
-    class DBConnectionStringError < ActivityMonitorError
+    class DBConnectionError < ActivityMonitorError
       def initialize(*args)
         super("The connection string was malformed: #{args}")
       end

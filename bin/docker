@@ -2,7 +2,8 @@
 
 PRJ_ROOT="$(cd $(dirname $0)/..; pwd)"
 
-DOCKER_IMAGE_NAME="activity_monitor_rb"
+NAME="activity_monitor"
+DOCKER_IMAGE_NAME="${NAME}_rb"
 DOCKER_IMAGE_VER="latest"
 DOCKER_WORK_D="/app"
 DOCKER_APP_D="$(cd $(dirname $0)/..; pwd)"
@@ -59,7 +60,35 @@ fi
     $DOCKER_IMAGE:$DOCKER_IMAGE_VER \
     $DOCKER_CMD\'"
 
+## quick n dirty, to get a simple test env running to test the db connection for pgsql adapter
+# prepend the env variable with any content to enable this
+# $> PGSQL=t bin/docker .......
+if [[ $(docker network inspect ${NAME}_network > /dev/null; echo $?) -gt 0 ]] then 
+    docker network create ${NAME}_network
+fi
+
+if [[ -n $PGSQL ]] then
+    if [[ $(docker container inspect ${NAME}_pgsql_cont > /dev/null; echo $?) -eq 0 ]] then
+        docker container stop ${NAME}_pgsql_cont
+    fi
+
+    echo "Starting the Postgresql test container"
+    
+    docker run -it --rm \
+        -d \
+        --network ${NAME}_network \
+        -e POSTGRES_DB=${NAME} \
+        -e POSTGRES_PASSWORD=postgres \
+        -e POSTGRES_USER=postgres \
+        --name ${NAME}_pgsql_cont \
+        postgres:15.5-alpine3.18
+
+    echo "waiting for db container to spin up"
+    sleep 3
+fi
+
 docker run -it --rm \
+    --network ${NAME}_network \
     -e DATABASE_URL=${DATABASE_URL} \
     -e BUNDLE_PATH=${DOCKER_BUNDLE_PATH} \
     -e AM_ENV=${AM_ENV} \
