@@ -35,7 +35,10 @@ module ActivityMonitor
         trailing_slugs: %w[
           new
         ],
-        db_url: "sqlite://#{__dir__}/../../../.data/am.db",
+        db_connections: [{
+          name: "default",
+          connection_string: "sqlite://#{__dir__}/../../../.data/am.db"
+        }],
         parent_app: nil,
         user_config_file: Pathname(__FILE__).dirname.join("../../../config/config.rb").realpath
       }
@@ -60,7 +63,21 @@ module ActivityMonitor
         when :root_slugs || :trailing_slugs
           @config.merge!({args[0] => args[1]})
         when :db
-          @config.merge!(:db_url => args[1])
+          a = args[1]
+          unless ( a.has_key?(:connection_string) || a.has_key?(:options) )
+            raise Errors::ActivityMonitorError.new("No 'connection_string' or 'options' key provided")
+          end
+          
+          update = false
+          @config[:db_connections].each_with_index do |conn, idx|
+            if conn[:name] == a[:name]
+              @config[:db_connections][idx] = a
+              update = true
+            end
+          end
+          unless update
+            @config[:db_connections].push(a);
+          end
         when :bitbucket_secret
           @config[:enabled_services][:bitbucket][:secret] = args[1]
         when :codeberg_secret
