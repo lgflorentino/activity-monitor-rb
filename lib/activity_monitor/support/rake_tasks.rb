@@ -22,9 +22,17 @@ namespace :db do
 
   desc "Sets up the database for use with AM"
   task :setup do
-    app_cfg = ActivityMonitor::Config.instance
-    rom_cfg = ROM::Configuration.new(:sql, app_cfg.config[:db_url])
-    rom = ROM.container(rom_cfg)
+    cfg = ActivityMonitor::Config.new
+    db_cfgs = cfg.config[:db_connections]
+    rom_cfgs = {} 
+    db_cfgs.each do |conn|
+      rom_cfgs[conn[:name].to_sym] = [
+        :sql,
+        conn[:connection_string],
+        { options: conn.has_key?(:options) ? conn[:options] : nil}
+        ]
+    end
+    rom = ROM.container(rom_cfgs)
     ROM::SQL::RakeSupport.env = rom
   end
 

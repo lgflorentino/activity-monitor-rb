@@ -15,7 +15,7 @@ module ActivityMonitor
         end
 
         def call(*)
-          log.debug "db migrate cli command #{@db_config.db}"
+          log.debug "db migrate cli command"
         end
       end
     end

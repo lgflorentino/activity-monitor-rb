@@ -16,20 +16,16 @@ module ActivityMonitor
         env: "development",
         enabled_services: {
           bitbucket: {
-            slug: "bb",
-            secret: nil
+            slug: "bb"
           },
           codeberg: {
-            slug: "cb",
-            secret: nil
+            slug: "cb"
           },
           github: {
-            slug: "gh",
-            secret: nil
+            slug: "gh"
           },
           gitlab: {
-            slug: "gl",
-            secret: nil
+            slug: "gl"
           },
         },
         trailing_slugs: %w[
@@ -40,7 +36,8 @@ module ActivityMonitor
           connection_string: "sqlite://#{__dir__}/../../../.data/am.db"
         }],
         parent_app: nil,
-        user_config_file: Pathname(__FILE__).dirname.join("../../../config/config.rb").realpath
+        user_config_file: Pathname(__FILE__).dirname.join("../../../config/config.rb").realpath,
+        secrets_file: nil
       }
 
       # no changes to config after this function is called
@@ -78,14 +75,6 @@ module ActivityMonitor
           unless update
             @config[:db_connections].push(a);
           end
-        when :bitbucket_secret
-          @config[:enabled_services][:bitbucket][:secret] = args[1]
-        when :codeberg_secret
-          @config[:enabled_services][:codeberg][:secret] = args[1]
-        when :github_secret
-          @config[:enabled_services][:github][:secret] = args[1]
-        when:gitlab_secret
-          @config[:enabled_services][:gitlab][:secret] = args[1]
         when :parent_app
           if args[1] === ("hanami" || "rails" || nil)
             @config.merge!({parent_app: args[1]})
@@ -98,10 +87,12 @@ module ActivityMonitor
           end
 
           @config[:env] = args[1]
+        when :secrets_file
+          @config[:secrets_file] = args[1]
         end
       end
       
-      def dump_to_console
+      def dump
         pp @config
       end
 

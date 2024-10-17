@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "json"
+require "rack"
 
 module ActivityMonitor
   module Routing
@@ -16,7 +16,8 @@ module ActivityMonitor
 
       def match_request(*args, **kws)
         path_info = args[0]["PATH_INFO"].to_s
-        resp = [404, {"Content-Type" => "text/html"}, ["Not Found"]]
+
+        res = Rack::Response[500, {"Content-Type" => "text/html"}, ["The activity_monitor server encountered an error"]]
 
         # match the route path then match the service slug based on a Regexp
         # dispatch the call to the service callback
@@ -25,25 +26,16 @@ module ActivityMonitor
           if route[2] === path_info
             slug_re = %r{^*/#{route[1]}/*}
             if slug_re.match?(path_info)
-              resp = process_request(route[0], env: args[0])
+              @services[route[0]].call(args[0], res)
               log.debug "Matched request: #{route[0]} with #{path_info}"
               break
             end
           end
         end
-
-        return resp
+        
+        res.finish
       end
 
-      # Selects the object and method to call based on the endpoint
-      #
-      # @param service - the service name as specified in config/base_config.rb
-      def process_request(service, env: nil)
-        json = JSON.parse env['rack.input'].read
-          @services[service].process_event(json)
-        resp = [200, {"Content-Type" => "text/html"}, ["Webhook delivered!"]]
-        return resp
-      end
     end
   end
 end

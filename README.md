@@ -8,45 +8,46 @@ There is no documentation given about setting up webhooks on any of the VCS plat
 
 Features:
 
-* Create and maintain a list of URL endpoints which will receive JSON from externally configured webhooks
-    * Feature location: `lib/activity_monitor/router`
-    - [ ] Feature implemented
-* Parse JSON that is received on the webhook endpoints
-    * Feature location: `lib/activity_monitor/json_parser`
-    - [ ] Feature implemented
-* Provide parsing for webhook events
-    * Feature location `lib/activity_monitor/json_parser/{all,subset}`
-    - [ ] Push event implemented
+* Supported Webhook Events
+    * Feature location: `lib/activity_monitor/json_parser/{all,subset}`
+    - [ * ] Push 
     - [ ] Pull Request event implemented
     - [ ] Issue Created event implemented
     - [ ] Comment event implemented
-* Store parsed data in db or other
-    * Feature location: `lib/activity_monitor/persistance`
-    - [ ] Feature implemented
-* Provide URL endpoints for the following third party services
-    - [ ] Github
-    - [ ] Gitlab
-    - [ ] Bitbucket
-    - [ ] Codeberg
+* JSON payload parsing
+    * Feature location: `lib/activity_monitor/json_parser`
+    - [ ] implemented
+* Provide support for the following third party services
+    * Feature location: `lib/activity_monitor/services/`
+    - [ * ] Github
+    - [ * ] Gitlab
+    - [ * ] Bitbucket
+    - [ * ] Codeberg
     - [ ] Source Hut (No webhooks yet)
-    - [ ] Custom git deployment
+    - [ ] Custom git deployment 
+* Create and maintain a list of URL endpoints which will receive JSON from externally configured webhooks
+    * Feature location: `lib/activity_monitor/routing && config/config.rb`
+    - [ * ] implemented
+    - [ * ] configurable
+* Provide webhook verification for each service
+    * Feature location: ``
+* Persistance features
+    * Feature location: `lib/activity_monitor/db`
+    - [ * ] Configures [rom-rb](https://github.com/rom-rb) to connect to db
+        - [ * ] supports the SQL adapter type from [rom-rb](https://rom-rb.org/learn/introduction/glossary/) 
+        - [ * ] Only a single connection is supported
 
 Anti-features:
 * No display or analysis of the data of any kind (see [hheatmap](https://github.com/lgflorentino/hheatmap) for reference front-end) or write your own web app to grab the data from the db
 
-## Installation
+## Standalone Usage Instructions
 
-Install the gem and add to the application's Gemfile by executing:
+Install the gem as a dependency through the usual bundle commands
 ```sh
-    $ bundle add activity_monitor
-    
-```
-If bundler is not being used to manage dependencies, install the gem by executing:
-```sh
-    $ gem install activity_monitor
+    $> bundle add activity_monitor
 ```
 
-### Hanami Extended Installation  **WIP
+## Hanami Plugin Usage Instructions [TODO]
 ```sh
 $ bundle exec hanami activity-monitor install
 ```
@@ -57,7 +58,7 @@ The app comes a Command Line Interface (CLI) tool to help with some tasks. The d
 Ex:
 ```sh
   # List available rake tasks
-  bundle exec rake --tasks
+  bundle exec rake [--tasks|-T]
 
   # Bundled activity monitor tool
   bundle exec am --help

@@ -24,5 +24,6 @@ module ActivityMonitor
       @am_config.finalise
       @am_config
     end
+
   end
 end
