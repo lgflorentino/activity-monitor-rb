@@ -49,6 +49,17 @@ module ActivityMonitor
         end
       end
 
+      class Secrets < Dry::CLI::Command
+        desc ""
+        def initialize
+          super
+        end
+
+        def call(*)
+          puts "The secrets.rb file should not be committed to version control.\nThe syntax of secrets.rb: \n{\n  bitbucket: {\n    \"repo:push\": \"some-secret\"\n  }\n}"
+        end
+      end
+
       module Run
         class Run < Dry::CLI::Command
           desc "\n\n  Do not use 'am run' if using AM as a middleware or plugin.
@@ -73,6 +84,7 @@ module ActivityMonitor
       end
 
       register "version", Version, aliases: ["v", "-v", "--version"]
+      register "secrets", Secrets, aliases: []
       register "generate", aliases: ["gen"] do |prefix|
         prefix.register "hanami-provider", Generate::HanamiProvider
       end

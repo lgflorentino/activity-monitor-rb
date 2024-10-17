@@ -23,7 +23,7 @@ module ActivityMonitor
         return @config[:user_config_file]
       end
       
-      ENABLED_ENV_SETTINGS = %i[ DATABASE_URL HANAMI_ENV AM_ENV RAILS_ENV RACK_ENV]
+      ENABLED_ENV_SETTINGS = %i[ DATABASE_URL HANAMI_ENV AM_ENV RAILS_ENV RACK_ENV AM_CONF]
 
       # Will incorporate settings from the environment. 
       # These settings get overwritten by config from the user defined config file.
@@ -40,7 +40,10 @@ module ActivityMonitor
               @config[:db_url] = renv[s.to_s]
             when :AM_ENV || :HANAMI_ENV || :RAILS_ENV || :RACK_ENV
               @config[:env] = renv[s.to_s]
+            when :AM_CONF
+              @config[:user_config_file] = renv[s.to_s]
             end
+          else
           end
         end
       end

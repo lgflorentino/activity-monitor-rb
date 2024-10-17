@@ -45,6 +45,11 @@ ActivityMonitor::Config.merge! do |c|
   # c.cfg :ss, :bitbucket, "bitbucket"
   # Result  - http://localhost/<root_slugs>/bitbucket/<trailing_slugs>
   #
+  # Example - path to secrets file
+  #           Default: nil
+  # c.cfg :secrets, "config/secrets.rb"
+  # c.cfg :secrets, { bitbucket: { "repo:push" => "nunya#beeswax"}}
+  # More info: bundle exec am secrets
   #
   # Example - will update the db_connections array with connection details. Connection string method has priority
   #           Default:
@@ -56,8 +61,7 @@ ActivityMonitor::Config.merge! do |c|
   # c.cfg :db, {name: "pgsql", options: { database: "activity_monitor", username: "postgres", password: "postgres", adapter: :postgres, host: "localhost", port: 5432, max_connections: 4 }}
   # Result: activity_monitor will use the provided connection string to connect to a database
   # More info: https://rom-rb.org/learn/sql/3.3/#connecting-to-a-database
-  c.cfg :db, { name: "pgsql", options: { database: "activity_monitor", username: "postgres", password: "postgres", adapter: :postgres, host: "activity_monitor_pgsql_cont", port: 5432, max_connections: 4 }}
-  
+  #
   #
   # Example - will replace the default router
   #           Default: ActivityMonitor::Routing::DefaultRouter
@@ -68,5 +72,6 @@ ActivityMonitor::Config.merge! do |c|
   # Example - dumps the current config to console
   # c.dump
   # Result  - Config Hash object as a 
+  #
   
 end

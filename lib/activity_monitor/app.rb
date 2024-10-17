@@ -10,7 +10,7 @@ module ActivityMonitor
       @db = init_db(cfg: @am_config[:db_connections])
       @services = init_services(db: @db, cfg: @am_config)
       @router = init_router
-      log.info("Initialized")
+      log.info("Initialized #{pp @am_config}")
     end
 
     def call(...)
@@ -23,7 +23,7 @@ module ActivityMonitor
     end
 
     def init_db(cfg: nil)
-      DB.prepare(db_cfgs: cfg)
+      DB.finalise(DB.prepare(cfg: cfg))
     end
 
     def init_services(db: nil, cfg: nil)
@@ -41,10 +41,6 @@ module ActivityMonitor
         @am_config[:enabled_services],
         @am_config[:trailing_slugs])
       Routing::DefaultRouter.new(services: @services, routes: routes)
-    end
-
-    def dump_config
-      @am_config.dump_to_console
     end
   
     def routes

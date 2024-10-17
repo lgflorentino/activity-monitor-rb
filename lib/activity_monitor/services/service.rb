@@ -7,18 +7,22 @@ module ActivityMonitor
 
       def initialize()
         @service_name = "default"
+        # @repo: reference to the configured ROM::Repository object for this service
+        @db_repo = nil
+        @data = {}
       end
 
-      def call(*args, **kws, &blk); end
 
       def db_setup(db: nil)
-        @repo = DB::Repos.init_repo(service_name: @service_name, db: db)
+        @db_repo = DB::Repos.init_repo(service_name: @service_name, db: db)
       end
 
-      def process_event(content)
-        dt = DateTime.now.iso8601(3)
-        @repo.create(type: "push", content: content.to_json, created_at: dt, updated_at: dt) 
-      end
+      def call(env, res);               puts "override this method"; end
+      def verified_sender?(env, res);   puts "override this method"; end
+      def check_req_headers(env, res);  puts "override this method"; end
+      def process_req_data(env, res);   puts "override this method"; end
+
+      attr_accessor :data
 
     end
   end

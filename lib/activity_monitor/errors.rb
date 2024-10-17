@@ -4,7 +4,7 @@ module ActivityMonitor
   module Errors
     class ActivityMonitorError < StandardError
       def initialize(arg)
-        super("ActivityMonitor Error: " + arg)
+        super("ActivityMonitor: " + arg)
       end
     end
 
@@ -27,8 +27,12 @@ module ActivityMonitor
     end
     
     class DBConnectionError < ActivityMonitorError
-      def initialize(*args)
-        super("The connection string was malformed: #{args}")
+      def initialize(arg)
+        if arg
+          super("#{arg}")
+        else
+          super("The connection string was malformed: #{args}")
+        end
       end
     end
     
