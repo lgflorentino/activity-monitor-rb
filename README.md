@@ -10,7 +10,7 @@ Features:
 
 * Supported Webhook Events
     * Feature location: `lib/activity_monitor/json_parser/{all,subset}`
-    - [ * ] Push 
+    - [x] Push 
     - [ ] Pull Request event implemented
     - [ ] Issue Created event implemented
     - [ ] Comment event implemented
@@ -19,23 +19,23 @@ Features:
     - [ ] implemented
 * Provide support for the following third party services
     * Feature location: `lib/activity_monitor/services/`
-    - [ * ] Github
-    - [ * ] Gitlab
-    - [ * ] Bitbucket
-    - [ * ] Codeberg
+    - [x] Github
+    - [x] Gitlab
+    - [x] Bitbucket
+    - [x] Codeberg
     - [ ] Source Hut (No webhooks yet)
     - [ ] Custom git deployment 
 * Create and maintain a list of URL endpoints which will receive JSON from externally configured webhooks
     * Feature location: `lib/activity_monitor/routing && config/config.rb`
-    - [ * ] implemented
-    - [ * ] configurable
+    - [x] implemented
+    - [x] configurable
 * Provide webhook verification for each service
     * Feature location: ``
 * Persistance features
     * Feature location: `lib/activity_monitor/db`
-    - [ * ] Configures [rom-rb](https://github.com/rom-rb) to connect to db
-        - [ * ] supports the SQL adapter type from [rom-rb](https://rom-rb.org/learn/introduction/glossary/) 
-        - [ * ] Only a single connection is supported
+    - [x] Configures [rom-rb](https://github.com/rom-rb) to connect to db
+        - [x] supports the SQL adapter type from [rom-rb](https://rom-rb.org/learn/introduction/glossary/) 
+        - [x] Only a single connection is supported
 
 Anti-features:
 * No display or analysis of the data of any kind (see [hheatmap](https://github.com/lgflorentino/hheatmap) for reference front-end) or write your own web app to grab the data from the db
