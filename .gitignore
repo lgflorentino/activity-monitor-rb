@@ -11,7 +11,9 @@
 /tmp/
 
 # Used by dotenv library to load environment variables.
-# .env
+.env
+.env.production
+.env.local
 
 .rspec_status
 spec/reports

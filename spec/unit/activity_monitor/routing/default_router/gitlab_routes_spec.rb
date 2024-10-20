@@ -7,8 +7,8 @@ RSpec.describe "DefaultRouter Gitlab Routes" do
   context "gitlab" do
   # https://docs.github.com/en/webhooks/using-webhooks/handling-webhook-deliveries
     it "responds to '/am/gl/new' route" do
-      response = router.process_request({"PATH_INFO" => @test_routes[:gitlab][:new]})
-      expect(response[0]).to equal(200)
+      res = Rack::MockRequest.new(router).post('/am/gl/new', :input => StringIO.new({ test: "data"}.to_json))
+      expect(res.status).to equal(200)
     end
   end
 

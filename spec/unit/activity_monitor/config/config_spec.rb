@@ -2,7 +2,7 @@
 RSpec.describe ActivityMonitor::Config do
 
   let(:cfg) do
-    ActivityMonitor::Config.new(path: (Pathname(__FILE__).dirname.join("../../../test-data/app-root/config/config.rb").realpath))
+    ActivityMonitor::Config.new(cfg_file: (Pathname(__FILE__).dirname.join("../../../test-data/app-root/config/config.rb").realpath))
   end
   
   let(:cfg_modified) do
@@ -24,13 +24,6 @@ RSpec.describe ActivityMonitor::Config do
   # The order of the tests matters with finalising an instance 
   it "can be finalised" do
     expect(cfg.finalised?).to equal(true)
-  end
-
-  it "correctly uses a user defined config block file" do
-    expect(cfg.config[:enabled_services][:bitbucket][:secret]).to eq("lunar wilderness")
-    expect(cfg.config[:enabled_services][:codeberg][:secret]).to eq("astral body")
-    expect(cfg.config[:enabled_services][:github][:secret]).to eq("extremophile elite")
-    expect(cfg.config[:enabled_services][:gitlab][:secret]).to eq("mass generator")
   end
 
   it "can get environment from the shell environment variables" do

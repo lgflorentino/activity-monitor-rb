@@ -6,8 +6,8 @@ RSpec.describe "DefaultRouter Codeberg Routes" do
   context "codeberg" do
   # https://forgejo.org/docs/latest/user/webhooks/
     it "responds to '/am/cb/new' route" do
-      response = router.process_request({"PATH_INFO" => @test_routes[:codeberg][:new]})
-      expect(response[0]).to equal(200)
+      res = Rack::MockRequest.new(router).post('/am/cb/new', :input => StringIO.new({ test: "data"}.to_json))
+      expect(res.status).to equal(200)
     end
   end
 

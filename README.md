@@ -17,12 +17,20 @@ Features:
 * JSON payload parsing
     * Feature location: `lib/activity_monitor/json_parser`
     - [ ] implemented
-* Provide support for the following third party services
+* Provide webhook event support for the following third party services
     * Feature location: `lib/activity_monitor/services/`
     - [x] Github
     - [x] Gitlab
     - [x] Bitbucket
     - [x] Codeberg
+    - [ ] Source Hut (No webhooks yet)
+    - [ ] Custom git deployment 
+* API access for the following third party services (very low priority)
+    * Feature location `lib/activity_monitor/services/api-clients`
+    - [ ] Github
+    - [ ] Gitlab
+    - [ ] Bitbucket
+    - [ ] Codeberg
     - [ ] Source Hut (No webhooks yet)
     - [ ] Custom git deployment 
 * Create and maintain a list of URL endpoints which will receive JSON from externally configured webhooks
@@ -52,7 +60,19 @@ Install the gem as a dependency through the usual bundle commands
 $ bundle exec hanami activity-monitor install
 ```
 
-## CLI Usage
+## Environment & 3rd party API access.
+**Not implemented yet**
+*This feature can be implemented externally to this app. Simply find the appropriate diff/compare link for the event from the db and call it using whatever api or http client you want.* 
+
+`ENABLE_API_ACCESS` defaults to `false`
+
+If the environment variable `ENABLE_API_ACCESS` is set to true the app will make requests to the 3rd party APIs which have been configured. This exposes the account under which the app is acting to be susceptible to rate limiting and other administration restrictions from the 3rd party. 
+
+Enabling API access will enable the app to retrieve the details about an event which will be much more deep than the data sent in the intial webhook event payload.
+
+If set to `ENABLE_API_ACCESS=true` please set the appropriate environment variables. The app will use these variables to authenticate itself with the API. The list of variables which need to be set are in the `.env.development` file with pre-filled dummy data. 
+
+## CLI
 
 The app comes a Command Line Interface (CLI) tool to help with some tasks. The documentation for the tool is provided by the tool when used in conjunction with the `--help` option.
 Ex:

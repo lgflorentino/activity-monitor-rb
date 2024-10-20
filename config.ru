@@ -2,4 +2,4 @@
 
 require "activity_monitor/standalone"
 
-run ActivityMonitor.run
+run ActivityMonitor.app

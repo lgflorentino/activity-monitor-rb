@@ -8,7 +8,7 @@ module ActivityMonitor
       def initialize(*args)
         super
 
-        # @level = defined?(env["RUBY_LOG_LEVEL"]) ? env["RUBY_LOG_LEVEL"] : Logger::DEBUG
+        @level = defined?(ENV["RUBY_LOG_LEVEL"]) ? ENV["RUBY_LOG_LEVEL"].to_i : Logger::WARN
 
         # formatter = ActivityMonitor::Logging::Formatter.new
 

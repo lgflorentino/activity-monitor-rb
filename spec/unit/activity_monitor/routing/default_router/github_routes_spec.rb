@@ -7,8 +7,8 @@ RSpec.describe "DefaultRouter Github Routes" do
   context "github" do
   # https://docs.github.com/en/webhooks/using-webhooks/handling-webhook-deliveries
     it "responds to '/am/gh/new' route" do
-      response = router.process_request({"PATH_INFO" => @test_routes[:github][:new]})
-      expect(response[0]).to equal(200)
+      res = Rack::MockRequest.new(router).post('/am/gh/new', :input => StringIO.new({ test: "data"}.to_json))
+      expect(res.status).to equal(200)
     end
   end
 

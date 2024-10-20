@@ -10,7 +10,6 @@ module ActivityMonitor
       @db = init_db(cfg: @am_config[:db_connections])
       @services = init_services(db: @db, cfg: @am_config)
       @router = init_router
-      log.info("Initialized #{pp @am_config}")
     end
 
     def call(...)
@@ -19,7 +18,8 @@ module ActivityMonitor
 
     # init_config
     def init_config
-      ActivityMonitor::Config.new.config
+      c = ActivityMonitor::Config.new
+      c.config
     end
 
     def init_db(cfg: nil)

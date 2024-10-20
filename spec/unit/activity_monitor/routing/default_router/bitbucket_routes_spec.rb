@@ -9,13 +9,8 @@ RSpec.describe "DefaultRouter Bitbucket Routes" do
   context "bitbucket" do
   # https://support.atlassian.com/bitbucket-cloud/docs/manage-webhooks/
     it "responds to '/am/bb/new' route" do
-      response = router.process_request(:bitbucket, {
-        "PATH_INFO" => @test_routes[:bitbucket][:new], 
-        "rack.input" => {
-          "test" => "data"
-        }
-      })
-      expect(response[0]).to equal(200)
+      res = Rack::MockRequest.new(router).post('/am/bb/new', :input => StringIO.new({ test: "data"}.to_json))
+      expect(res.status).to equal(200)
     end
   end
 end

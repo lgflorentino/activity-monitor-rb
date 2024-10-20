@@ -16,7 +16,7 @@ module ActivityMonitor
 
         def call(*)
           puts "Routes: [name], [slug], [path]\n"
-          pp ActivityMonitor.am.routes
+          pp ActivityMonitor.app.routes
         end
       end
     end
