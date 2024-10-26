@@ -19,6 +19,7 @@ module ActivityMonitor
     # init_config
     def init_config
       c = ActivityMonitor::Config.new
+      pp c.config
       c.config
     end
 

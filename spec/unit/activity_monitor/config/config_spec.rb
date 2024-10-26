@@ -27,7 +27,6 @@ RSpec.describe ActivityMonitor::Config do
   end
 
   it "can get environment from the shell environment variables" do
-
     expect(cfg_modified.config[:env]).to eq("test-env")
   end
 

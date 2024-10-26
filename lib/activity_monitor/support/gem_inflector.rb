@@ -11,6 +11,8 @@ module ActivityMonitor
         # \A matches start of string
         # =~ matches against a regex
         # (.*) dot matches any character, star matches preceding character 0 or more times
+        when /\Aam(.*)/
+          "AM" + super($1, abspath)
         when /\Acli(.*)/
           "CLI" + super($1, abspath)
         when /\Adb(.*)/

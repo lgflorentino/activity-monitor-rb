@@ -56,6 +56,9 @@ Install the gem as a dependency through the usual bundle commands
 ```
 
 ## Hanami Plugin Usage Instructions [TODO]
+
+The Hanami integration is provided in the form of a [Slice](https://guides.hanamirb.org/v2.2/app/slices/). The slice's root is the `./slice/activity_monitor` directory.
+
 ```sh
 $ bundle exec hanami activity-monitor install
 ```
